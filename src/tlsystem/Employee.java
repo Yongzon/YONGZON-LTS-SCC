@@ -1,6 +1,16 @@
 package tlsystem;
 import java.util.Scanner;
 public class Employee {
+    
+    public void viewTask() {
+        String Query = "SELECT * FROM employee_task";
+        String[] Headers = {"Task Name", "Description"};
+        String[] Columns = {"t_name", "t_des"};
+
+        config conf = new config();
+        conf.viewRecords(Query, Headers, Columns);
+}
+    
     public void empTask() {
         Scanner sc = new Scanner(System.in);
         config conf = new config();
@@ -74,26 +84,27 @@ public class Employee {
     public void selection(){
         Scanner sc = new Scanner(System.in);
         Employee emp = new Employee();
+        Manager mgr = new Manager();
         Hr hr = new Hr();
         int act;
         boolean exit = true;
         
     do{
-        System.out.println("\n==== Select Option ====");
-        System.out.println("| 1. Input Progress   |");
-        System.out.println("| 2. Update Progress  |");
-        System.out.println("| 3. View Task Report |");
-        System.out.println("| 4. Exit             |");
-        System.out.println("=======================");
+        System.out.println("\n====== Select Option ======");
+        System.out.println("| 1. Input Progress       |");
+        System.out.println("| 2. Update Progress      |");
+        System.out.println("| 3. View Task and Report |");
+        System.out.println("| 4. Exit                 |");
+        System.out.println("===========================");
         System.out.print("Enter Option: ");
         act = sc.nextInt();
         
         switch(act){
-            case 1: 
+            case 1:
                 System.out.println("\nList of Employee's Account");
                 hr.viewAcc();
                 System.out.println("\nList of Task");
-                hr.viewTask();
+                mgr.viewTask();
                 System.out.println("\nTask Report");
                 hr.taskReport();
                 emp.empTask();
@@ -103,13 +114,23 @@ public class Employee {
                 System.out.println("\nList of Employee's Account");
                 hr.viewAcc();
                 System.out.println("\nList of Task");
-                hr.viewTask();
+                mgr.viewTask();
                 System.out.println("\nTask Report");
                 hr.taskReport();
                 emp.empTaskUpt();
                 break;
                 
             case 3:
+                System.out.println("\nList of Task");
+                hr.viewTask();
+                
+                System.out.print("\nView Full Details of Employee Task? (yes/no): ");
+                String res = sc.next();
+                    while(res.equals("yes")){
+                        emp.viewTask();
+                        break;
+                }
+                
                 System.out.println("\nTask Report");
                 hr.taskReport();
                 break;
@@ -120,6 +141,7 @@ public class Employee {
                     if(resp.equalsIgnoreCase("yes")){
                     exit = false;
                     }
+                    System.out.print("Returning to main menu....\n");
                 break;
                 
             default: 

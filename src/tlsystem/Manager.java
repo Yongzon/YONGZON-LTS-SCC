@@ -3,6 +3,25 @@ package tlsystem;
 import java.util.Scanner;
 
 public class Manager {
+    
+    public void viewTask() {
+        String Query = "SELECT * FROM employee_task  WHERE t_status != 'Started'";
+        String[] Headers = {"Task ID", "Task Name", "Priority Level", "Due Date", "Status"};
+        String[] Columns = {"t_id", "t_name", "t_pl", "t_dd", "t_status"};
+
+        config conf = new config();
+        conf.viewRecords(Query, Headers, Columns);
+}
+    
+    public void viewTask2() {
+        String Query = "SELECT * FROM employee_task WHERE t_status != 'Started'";
+        String[] Headers = {"Task Name", "Description"};
+        String[] Columns = {"t_name", "t_des"};
+
+        config conf = new config();
+        conf.viewRecords(Query, Headers, Columns);
+}
+
     public void assTask() {
        Scanner sc = new Scanner(System.in);
        config conf = new config();
@@ -138,7 +157,7 @@ do{
         System.out.println("\n================== Welcome To Task Listing System ==================");
         System.out.println("| 1. Add Comment to the Task of Employee                           |");
         System.out.println("| 2. Task Assigning                                                |");
-        System.out.println("| 3. View Employee Account, Employee Task and Task Report          |");
+        System.out.println("| 3. View Employee Task and Task Report                            |");
         System.out.println("| 4. Update Employee Task and Comment                              |");
         System.out.println("| 5. Delete Employee Task                                          |");
         System.out.println("| 6. Exit                                                          |");
@@ -157,53 +176,53 @@ do{
                     hr.taskReport();
                     break;
                 case 2:
-                    System.out.println("\nList of Employee's Accounts");
-                    hr.viewAcc();
                     System.out.println("\nList of Task");
-                    hr.viewTask();
+                    mgr.viewTask();
                     mgr.assTask();
                     System.out.println("\nTask Report");
                     hr.taskReport();
                     break;
 
                 case 3:
-                    System.out.println("\nList of Employee's Accounts");
-                    hr.viewAcc();
                     System.out.println("\nList of Task");
-                    hr.viewTask();
+                    mgr.viewTask();
+                    
+                    System.out.print("View Full Details of Employee Task? (yes/no): ");
+                    String res = sc.next();
+                    while(res.equals("yes")){
+                        mgr.viewTask2();
+                        break;
+                    }
+                    
                     System.out.println("\nTask Report");
                     hr.taskReport();
                     break;
 
                 case 4:
-                    System.out.println("\nList of Employee's Account");
-                    hr.viewAcc();
                     System.out.println("\nList of Employee Task");
-                    hr.viewTask();
+                    mgr.viewTask();
                     
                     System.out.print("Update Employee Task? (yes/no): ");
                     String utsk = sc.next();
                     while(utsk.equals("yes")){
                         mgr.updateTask();
-                        hr.viewTask();
+                        mgr.viewTask();
                         break;
                     } 
                     System.out.print("Update Comment? (yes/no): ");
                     String upt = sc.next();
                     while(upt.equals("yes")){
                         mgr.taskComUpt();
-                        hr.viewTask();
+                        mgr.viewTask();
                         break;
                     }
                     break;
 
                 case 5:
-                    System.out.println("\nList of Employee's Accounts");
-                    hr.viewAcc();
                     System.out.println("\nList of Task");
-                    hr.viewTask();
+                    mgr.viewTask();
                     mgr.deleteTask();
-                    hr.viewTask();
+                    mgr.viewTask();
                     break;
 
                 case 6:
@@ -212,6 +231,7 @@ do{
                         if(resp.equalsIgnoreCase("yes")){
                         exit = false;
                         }
+                        System.out.print("Returning to main menu....\n");
                     break;
 
                     default:

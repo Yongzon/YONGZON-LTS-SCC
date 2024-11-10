@@ -50,10 +50,19 @@ public class Hr {
         config conf = new config();
         conf.viewRecords(Query, Headers, Columns);
 }
+    
     public void viewTask() {
         String Query = "SELECT * FROM employee_task";
-        String[] Headers = {"Task ID", "Task Name", "Description", "Priority Level", "Due Date", "Status"};
-        String[] Columns = {"t_id", "t_name", "t_des", "t_pl", "t_dd", "t_status"};
+        String[] Headers = {"Task ID", "Task Name", "Priority Level", "Due Date", "Status"};
+        String[] Columns = {"t_id", "t_name", "t_pl", "t_dd", "t_status"};
+
+        config conf = new config();
+        conf.viewRecords(Query, Headers, Columns);
+}
+    public void viewTask2() {
+        String Query = "SELECT * FROM employee_task";
+        String[] Headers = {"Task ID", "Task Name", "Description"};
+        String[] Columns = {"t_id", "t_name", "t_des"};
 
         config conf = new config();
         conf.viewRecords(Query, Headers, Columns);
@@ -107,7 +116,7 @@ public class Hr {
     }
 
         String sql = "DELETE FROM employee_acc WHERE acc_id = ?";
-        conf.updateRecord(sql, id);
+        conf.deleteRecord(sql, id);
     }
     
     public void deleteTask(){
@@ -123,7 +132,7 @@ public class Hr {
         id = sc.nextInt();
 }
         String sql = "DELETE FROM employee_task WHERE t_id = ?";
-       conf.updateRecord(sql, id);
+       conf.deleteRecord(sql, id);
     }
         
 public void Humanr(){
@@ -159,6 +168,14 @@ do{
                     hr.viewAcc();
                     System.out.println("\nList of Task");
                     hr.viewTask();
+                    
+                    System.out.print("\nView Full Details of Employee Task? (yes/no): ");
+                    String res = sc.next();
+                    while(res.equals("yes")){
+                        hr.viewTask2();
+                        break;
+                    }
+                    
                     System.out.println("\nTask Report");
                     hr.taskReport();
                     break;
@@ -206,6 +223,7 @@ do{
                         if(resp.equalsIgnoreCase("yes")){
                         exit = false;
                         }
+                        System.out.print("Returning to main menu....\n");
                     break;
 
                     default:
@@ -215,5 +233,5 @@ do{
             System.out.println("Invalid input. Please enter a valid number.");
             }
         } while(exit);    
-}
+}   
 }
