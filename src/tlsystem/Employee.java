@@ -14,66 +14,135 @@ public class Employee {
     public void empTask() {
         Scanner sc = new Scanner(System.in);
         config conf = new config();
+        int id, id2;
+        double prog;
 
         System.out.print("\nEnter your Account ID: ");
-        int id = sc.nextInt();
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid ID.");
+                sc.next();
+                System.out.print("Enter your Account ID: ");
+            }
+            id = sc.nextInt();
 
         while((conf.getSingleValue("SELECT acc_id FROM employee_acc WHERE acc_id = ?", id)) == 0){
             System.out.println("Selected Account ID doesn't exist!");
             System.out.print("Enter your Account ID again: ");
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid ID.");
+                sc.next();
+                System.out.print("Enter your Account ID again: ");
+            }
             id = sc.nextInt();
         }
 
         System.out.print("Enter your Assigned Task ID: ");
-        int id2 = sc.nextInt();
+        while (!sc.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid ID.");
+            sc.next();
+            System.out.print("Enter your Assigned Task ID: ");
+        }
+        id2 = sc.nextInt();
 
         while((conf.getSingleValue("SELECT t_id FROM employee_task WHERE t_id = ?", id2)) == 0){
             System.out.println("Selected Task ID doesn't exist!");
             System.out.print("Enter Task ID again: ");
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid ID.");
+                sc.next();
+                System.out.print("Enter Task ID again: ");
+            }
             id2 = sc.nextInt();
         }
 
         System.out.print("Enter progress to your task: ");
-        double prog = sc.nextDouble();
+        while (!sc.hasNextDouble()) {
+            System.out.println("Invalid input. Please enter a valid number.");
+            sc.next();
+            System.out.print("Enter progress to your task: ");
+        }
+        prog = sc.nextDouble();
 
         if (prog <= -1) {
             System.out.println("Error adding, progress percentage should be a positive number");
             System.out.print("Enter your progress again: ");
+            while (!sc.hasNextDouble()) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                sc.next();
+                System.out.print("Enter progress to your task: ");
+            }
             prog = sc.nextDouble();
         }
         
-        String sql = "UPDATE task_report SET tr_progress = ? WHERE acc_id = ? AND t_id = ?";
-        conf.updateRecord(sql, prog, id, id2);
+        String status = "Started";
+        
+        String sql1 = "UPDATE task_report SET tr_progress = ? WHERE acc_id = ? AND t_id = ?";
+        conf.updateRecord(sql1, prog, id, id2);
+
+        String sql2 = "UPDATE employee_task SET t_status = ? WHERE t_id = ?";
+        conf.updateRecord(sql2, status, id2);
     }
 
     public void empTaskUpt() {
         Scanner sc = new Scanner(System.in);
         config conf = new config();
+        int id, id2;
+        double prog;
 
         System.out.print("\nEnter your Account ID: ");
-        int id = sc.nextInt();
+        while (!sc.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid ID.");
+            sc.next();
+            System.out.print("Enter your Account ID: ");
+        }
+        id = sc.nextInt();
 
         while((conf.getSingleValue("SELECT acc_id FROM employee_acc WHERE acc_id = ?", id)) == 0){
             System.out.println("Selected Account ID doesn't exist!");
             System.out.print("Enter your Account ID again: ");
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid ID.");
+                sc.next();
+                System.out.print("Enter your Accoubt ID again: ");
+            }
             id = sc.nextInt();
         }
 
         System.out.print("Enter your Task ID: ");
-        int id2 = sc.nextInt();
+        while (!sc.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid ID.");
+            sc.next();
+            System.out.print("Enter your Task ID: ");
+        }
+        id2 = sc.nextInt();
 
         while((conf.getSingleValue("SELECT t_id FROM employee_task WHERE t_id = ?", id2)) == 0){
             System.out.println("Selected Task ID doesn't exist!");
             System.out.print("Enter your Task ID again: ");
-            id2 = sc.nextInt();
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid ID.");
+                sc.next();
+                System.out.print("Enter your Task ID again: ");
+            }
+            id = sc.nextInt();
         }
 
         System.out.print("Enter Update progress of the Selected task: ");
-        double prog = sc.nextDouble();
-        
+        while (!sc.hasNextDouble()) {
+            System.out.println("Invalid input. Please enter a valid number.");
+            sc.next();
+            System.out.print("Enter Update progress to the Selected task: ");
+        }
+        prog = sc.nextDouble();
+
         if (prog <= -1) {
-            System.out.println("Error updating, progress percentage should be a positive number");
-            System.out.print("Enter your updated progress again: ");
+            System.out.println("Error adding, progress percentage should be a positive number");
+            System.out.print("Enter Update progress again: ");
+            while (!sc.hasNextDouble()) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                sc.next();
+                System.out.print("Enter Update progress again: ");
+            }
             prog = sc.nextDouble();
         }
 
@@ -86,7 +155,7 @@ public class Employee {
         Employee emp = new Employee();
         Manager mgr = new Manager();
         Hr hr = new Hr();
-        int act;
+        int opt;
         boolean exit = true;
         
     do{
@@ -97,9 +166,14 @@ public class Employee {
         System.out.println("| 4. Exit                 |");
         System.out.println("===========================");
         System.out.print("Enter Option: ");
-        act = sc.nextInt();
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                sc.next();
+                System.out.print("Enter Option: ");
+            }
+            opt = sc.nextInt();
         
-        switch(act){
+        switch(opt){
             case 1:
                 System.out.println("\nList of Employee's Account");
                 hr.viewAcc();
@@ -141,12 +215,12 @@ public class Employee {
                     if(resp.equalsIgnoreCase("yes")){
                     exit = false;
                     }
-                    System.out.print("Returning to main menu....\n");
                 break;
                 
             default: 
-                System.out.println("Invalid Option");
+                System.out.println("Invalid Option, There's no such number");
           }
         }while(exit);
+            System.out.print("Returning to main menu....\n");
     }
 }

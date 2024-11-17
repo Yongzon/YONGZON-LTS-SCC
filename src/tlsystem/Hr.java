@@ -35,8 +35,7 @@ public class Hr {
         String pl = sc.nextLine();
         System.out.print("Due Date (mm/dd/yy): ");
         String dd = sc.nextLine();
-        System.out.print("Status: ");
-        String status = sc.nextLine();
+        String status = "Pending...";
 
         String sqlTask = "INSERT INTO employee_task (t_name, t_des, t_pl, t_dd, t_status) VALUES (?, ?, ?, ?, ?)";
         conf.addRecord(sqlTask, tname, des, pl, dd, status);
@@ -69,12 +68,12 @@ public class Hr {
 }
 
     public void taskReport(){
-        String taskRquery = "SELECT employee_acc.acc_id, employee_task.t_id, employee_task.t_dd, employee_task.t_status, task_report.tr_progress, task_report.t_com "
+        String taskRquery = "SELECT employee_acc.acc_id, employee_task.t_id, employee_task.t_dd, employee_task.t_status, task_report.tr_progress "
                 + "FROM task_report INNER JOIN employee_acc ON employee_acc.acc_id = task_report.acc_id "
                 + "INNER JOIN employee_task ON employee_task.t_id = task_report.t_id";
 
-        String[] Headers = {"Assigned Account ID", "Assigned Task ID", "Due Date", "Progress Percentage", "Status", "Comment Of Manager"};
-        String[] Columns = {"acc_id", "t_id", "t_dd", "tr_progress", "t_status", "t_com"};
+        String[] Headers = {"Assigned Account ID", "Assigned Task ID", "Due Date", "Progress Percentage", "Status"};
+        String[] Columns = {"acc_id", "t_id", "t_dd", "tr_progress", "t_status"};
 
         config conf = new config();
         conf.viewRecords(taskRquery, Headers, Columns);
@@ -83,15 +82,27 @@ public class Hr {
     public void updateAcc(){
         Scanner sc = new Scanner(System.in);
         config conf = new config();
+        int id;
                
         System.out.print("\nEnter Account ID to Update: ");
-        int id = sc.nextInt();
+        while (!sc.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid ID.");
+            sc.next();
+            System.out.print("Enter Account ID to Update: ");
+        }
+        id = sc.nextInt();
         
         while((conf.getSingleValue("SELECT acc_id FROM employee_acc WHERE acc_id = ?", id)) == 0){
-        System.out.println("Selected Account ID doesn't exist!");
-        System.out.print("Enter Account ID again: ");
-        id = sc.nextInt();
-    } 
+            System.out.println("Selected Account ID doesn't exist!");
+            System.out.print("Enter Account ID again: ");
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid ID.");
+                sc.next();
+                System.out.print("Enter Account ID again: ");
+            }
+            id = sc.nextInt();
+        } 
+        
         sc.nextLine();
         System.out.print("Enter new Department: ");
         String edpt = sc.nextLine();
@@ -105,15 +116,26 @@ public class Hr {
     public void deleteAcc(){
         Scanner sc = new Scanner(System.in);
         config conf = new config();
+        int id;
         
         System.out.print("\nEnter Account ID to Delete: ");
-        int id = sc.nextInt();
+        while (!sc.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid ID.");
+            sc.next();
+            System.out.print("Enter Account ID to Delete: ");
+        }
+        id = sc.nextInt();
 
         while((conf.getSingleValue("SELECT acc_id FROM employee_acc WHERE acc_id = ?", id)) == 0){
-        System.out.println("Selected Account ID doesn't exist!");
-        System.out.print("Enter Account ID again: ");
-        id = sc.nextInt();
-    }
+            System.out.println("Selected Account ID doesn't exist!");
+            System.out.print("Enter Account ID again: ");
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid ID.");
+                sc.next();
+                System.out.print("Enter Account ID again: ");
+            }
+            id = sc.nextInt();
+        }
 
         String sql = "DELETE FROM employee_acc WHERE acc_id = ?";
         conf.deleteRecord(sql, id);
@@ -122,23 +144,35 @@ public class Hr {
     public void deleteTask(){
         Scanner sc = new Scanner(System.in);
         config conf = new config();
+        int id;
         
         System.out.print("\nEnter Task ID to Delete: ");
-        int id = sc.nextInt();
+        while (!sc.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid ID.");
+            sc.next();
+            System.out.print("Enter Task ID to Delete: ");
+        }
+        id = sc.nextInt();
 
         while((conf.getSingleValue("SELECT t_id FROM employee_task WHERE t_id = ?", id)) == 0){
-        System.out.println("Selected Task ID doesn't exist!");
-        System.out.print("Enter Task ID again: ");
-        id = sc.nextInt();
-}
-        String sql = "DELETE FROM employee_task WHERE t_id = ?";
+            System.out.println("Selected Task ID doesn't exist!");
+            System.out.print("Enter Task ID again: ");
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid ID.");
+                sc.next();
+                System.out.print("Enter Task ID again: ");
+            }
+            id = sc.nextInt();
+        }
+         
+       String sql = "DELETE FROM employee_task WHERE t_id = ?";
        conf.deleteRecord(sql, id);
-    }
+}
         
 public void Humanr(){
         Hr hr = new Hr();
         Scanner sc = new Scanner (System.in);
-        int chose, act;
+        int cho;
         boolean exit = true;
 do{ 
         System.out.println("\n================== Welcome To Task Listing System ==================");
@@ -149,12 +183,16 @@ do{
         System.out.println("| 5. Delete Employee Account and Employee Task                     |");
         System.out.println("| 6. Exit                                                          |");
         System.out.println("====================================================================");
-        System.out.print("Enter Action: ");
+        System.out.print("Enter Choice: ");
        
-        if(sc.hasNextInt()){
-            act = sc.nextInt();
+            while (!sc.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                sc.next();
+                System.out.print("Enter Choice: ");
+            }
+            cho = sc.nextInt();
             
-            switch(act){
+            switch(cho){
                 case 1:
                     hr.addEmpAcc();
                 break;
@@ -183,9 +221,8 @@ do{
                 case 4:
                     System.out.println("\nList of Employee's Account");
                     hr.viewAcc();
-                    System.out.println("\nList of Employee Task");
-                    hr.viewTask();
                     hr.updateAcc();
+                    System.out.println("\nList of Employee's Account");
                     hr.viewAcc();
                     break;
 
@@ -223,15 +260,12 @@ do{
                         if(resp.equalsIgnoreCase("yes")){
                         exit = false;
                         }
-                        System.out.print("Returning to main menu....\n");
                     break;
 
                     default:
                         System.out.println("Action Error, There's no such number");
             }
-          }else{
-            System.out.println("Invalid input. Please enter a valid number.");
-            }
         } while(exit);    
-}   
+            System.out.print("Returning to main menu....\n");
+    }   
 }
