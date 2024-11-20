@@ -136,12 +136,19 @@ do{
                     System.out.println("\nList of Task");
                     mgr.viewTask();
                     
-                    System.out.print("View Full Details of Employee Task? (yes/no): ");
-                    String res = sc.next();
-                    while(res.equals("yes")){
-                        mgr.viewTask2();
-                        break;
-                    }
+                    do {
+                        System.out.print("\nView Full Details of Employee Task? (yes/no): ");
+                        String res = sc.next();
+
+                        if (res.equalsIgnoreCase("yes")) {
+                            mgr.viewTask2(); 
+                            break; 
+                        } else if (res.equalsIgnoreCase("no")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
+                        }
+                    } while (true); 
                     
                     System.out.println("\nTask Report");
                     hr.taskReport();
@@ -150,25 +157,41 @@ do{
                 case 3:
                     System.out.println("\nList of Task");
                     mgr.viewTask();
-                    System.out.print("Delete Task? (yes/no): ");
-                    String res1 = sc.next();
-                    while(res1.equals("yes")){
-                        mgr.deleteTask();
-                        mgr.viewTask();
-                        break;
-                    }
+                    
+                    do {
+                        System.out.print("\nDelete Task? (yes/no): ");
+                        String res = sc.next();
+
+                        if (res.equalsIgnoreCase("yes")) {
+                            mgr.deleteTask();
+                            mgr.viewTask();
+                            break; 
+                        } else if (res.equalsIgnoreCase("no")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
+                        }
+                    } while (true); 
                     break;
 
                 case 4:
-                    System.out.print("Exit selected...type yes to continue: ");
-                        String resp = sc.next();
-                        if(resp.equalsIgnoreCase("yes")){
-                        exit = false;
+                    do {
+                        System.out.print("\nExit Selected.... type yes to continue: ");
+                        String res = sc.next();
+
+                        if (res.equalsIgnoreCase("yes")) {
+                            exit = false;
+                            break; 
+                        } else if (res.equalsIgnoreCase("no")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
                         }
+                    } while (true); 
                     break;
 
                     default:
-                        System.out.println("Choice Error, There's no such number");
+                       System.out.println("Choice Error, There's no number "+cho+" in choices!");
             }
         }while(exit);
             System.out.print("Returning to main menu....\n");

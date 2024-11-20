@@ -184,7 +184,6 @@ do{
         System.out.println("| 6. Exit                                                          |");
         System.out.println("====================================================================");
         System.out.print("Enter Choice: ");
-       
             while (!sc.hasNextInt()) {
                 System.out.println("Invalid input. Please enter a valid number.");
                 sc.next();
@@ -207,13 +206,20 @@ do{
                     System.out.println("\nList of Task");
                     hr.viewTask();
                     
-                    System.out.print("\nView Full Details of Employee Task? (yes/no): ");
-                    String res = sc.next();
-                    while(res.equals("yes")){
-                        hr.viewTask2();
-                        break;
-                    }
-                    
+                    do {
+                        System.out.print("\nView Full Details of Employee Task? (yes/no): ");
+                        String res = sc.next();
+
+                        if (res.equalsIgnoreCase("yes")) {
+                            hr.viewTask(); 
+                            break; 
+                        } else if (res.equalsIgnoreCase("no")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
+                        }
+                    } while (true); 
+                
                     System.out.println("\nTask Report");
                     hr.taskReport();
                     break;
@@ -230,40 +236,62 @@ do{
                     System.out.println("\nList of Employee's Accounts");
                     hr.viewAcc();
 
-                    System.out.print("\nDelete Employee's Account (yes/no)?: ");
-                    String dlEmpAcc = sc.next();
-                    while(dlEmpAcc.equals("yes")){
-                        hr.deleteAcc();
-                        hr.viewAcc();
-                        System.out.println("\nTask Report");
-                        hr.taskReport();
-                        break;
-                    }
+                    do {
+                        System.out.print("\nDelete Employee's Account? (yes/no): ");
+                        String dlEmpAcc = sc.next();
+
+                        if (dlEmpAcc.equalsIgnoreCase("yes")) {
+                            hr.deleteAcc();
+                            hr.viewAcc();
+                            System.out.println("\nTask Report");
+                            hr.taskReport();
+                            break; 
+                        } else if (dlEmpAcc.equalsIgnoreCase("no")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
+                        }
+                    } while (true); 
 
                     System.out.println("\nList of Task");
                     hr.viewTask();
+                    
+                    do {
+                        System.out.print("\nDelete Task (yes/no)? (yes/no): ");
+                        String dlTask = sc.next();
 
-                    System.out.print("\nDelete Task (yes/no)?: ");
-                    String dlTask = sc.next();
-                    while(dlTask.equals("yes")){
-                        hr.deleteTask();
-                        hr.viewTask();
-                        System.out.println("\nTask Report");
-                        hr.taskReport();
-                        break;
-                    }
+                        if (dlTask.equalsIgnoreCase("yes")) {
+                            hr.deleteTask();
+                            hr.viewTask();
+                            System.out.println("\nTask Report");
+                            hr.taskReport();
+                            break; 
+                        } else if (dlTask.equalsIgnoreCase("no")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
+                        }
+                    } while (true); 
                     break;
 
                 case 6:
-                    System.out.print("Exit selected...type yes to continue: ");
-                        String resp = sc.next();
-                        if(resp.equalsIgnoreCase("yes")){
-                        exit = false;
+                    do {
+                        System.out.print("\nExit Selected.... type yes to continue: ");
+                        String res = sc.next();
+
+                        if (res.equalsIgnoreCase("yes")) {
+                            exit = false;
+                            break; 
+                        } else if (res.equalsIgnoreCase("no")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
                         }
+                    } while (true);
                     break;
 
                     default:
-                        System.out.println("Action Error, There's no such number");
+                        System.out.println("Choice Error, There's no number "+cho+" in choices!");
             }
         } while(exit);    
             System.out.print("Returning to main menu....\n");

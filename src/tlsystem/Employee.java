@@ -197,28 +197,43 @@ public class Employee {
             case 3:
                 System.out.println("\nList of Task");
                 hr.viewTask();
-                
-                System.out.print("\nView Full Details of Employee Task? (yes/no): ");
-                String res = sc.next();
-                    while(res.equals("yes")){
-                        emp.viewTask();
+
+                do {
+                    System.out.print("\nView Full Details of Employee Task? (yes/no): ");
+                    String res = sc.next();
+
+                    if (res.equalsIgnoreCase("yes")) {
+                        emp.viewTask(); 
+                        break; 
+                    } else if (res.equalsIgnoreCase("no")) {
                         break;
-                }
+                    } else {
+                        System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
+                    }
+                } while (true); 
                 
                 System.out.println("\nTask Report");
                 hr.taskReport();
                 break;
             
             case 4:
-                System.out.print("Exit Selected.... type yes to continue: ");
-                    String resp = sc.next();
-                    if(resp.equalsIgnoreCase("yes")){
-                    exit = false;
+                do {
+                    System.out.print("\nExit Selected.... type yes to continue: ");
+                    String res = sc.next();
+
+                    if (res.equalsIgnoreCase("yes")) {
+                        exit = false;
+                        break; 
+                    } else if (res.equalsIgnoreCase("no")) {
+                        break;
+                    } else {
+                        System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
                     }
+                } while (true); 
                 break;
                 
             default: 
-                System.out.println("Invalid Option, There's no such number");
+                System.out.println("Invalid Option, There's no number "+opt+" in option!");
           }
         }while(exit);
             System.out.print("Returning to main menu....\n");

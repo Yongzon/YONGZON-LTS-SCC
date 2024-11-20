@@ -39,18 +39,25 @@ public class Tlsystem {
                     break;
                 
                 case 4:
-                    System.out.print("Do you want to exit? (yes/no): ");
-                    String resp = sc.next();
-                    if(resp.equalsIgnoreCase("yes")) {
-                        exit = false;
-                    }
+                    do {
+                        System.out.print("\nExit Selected.... type yes to continue: ");
+                        String res = sc.next();
+
+                        if (res.equalsIgnoreCase("yes")) {
+                            exit = false;
+                            break; 
+                        } else if (res.equalsIgnoreCase("no")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid 'yes' or 'no'.");
+                        }
+                    } while (true); 
                     break;
                 
                 default:
-                    System.out.println("Choice Error, There's no such number.");
+                    System.out.println("Choice Error, There's no number "+cho+" in choices!");
             }  
         } while(exit);
-        
         System.out.println("Thank you for using the TLS System :)");
     }
 }
