@@ -88,6 +88,7 @@ public class Employee {
         config conf = new config();
         int id, id2;
         double prog;
+        String status = "Started";
 
         System.out.print("\nEnter your Account ID: ");
         while (!sc.hasNextInt()) {
@@ -144,8 +145,15 @@ public class Employee {
                 System.out.print("Enter Update progress again: ");
             }
             prog = sc.nextDouble();
+        };
+        
+        if(prog == 100){
+            status = "Complete";
         }
-
+        
+        String sql2 = "UPDATE employee_task SET t_status = ? WHERE t_id = ?";
+        conf.updateRecord(sql2, status, id2);
+        
         String sql = "UPDATE task_report SET tr_progress = ? WHERE acc_id = ? AND t_id = ?";
         conf.updateRecord(sql, prog, id, id2);
 }
@@ -188,7 +196,7 @@ public class Employee {
                 System.out.println("\nList of Employee's Account");
                 hr.viewAcc();
                 System.out.println("\nList of Task");
-                mgr.viewTask();
+                hr.viewTask();
                 System.out.println("\nTask Report");
                 hr.taskReport();
                 emp.empTaskUpt();

@@ -68,12 +68,12 @@ public class Hr {
 }
 
     public void taskReport(){
-        String taskRquery = "SELECT employee_acc.acc_id, employee_task.t_id, employee_task.t_dd, employee_task.t_status, task_report.tr_progress "
+        String taskRquery = "SELECT employee_acc.acc_id, employee_acc.e_fname, employee_task.t_id, employee_task.t_name, employee_task.t_dd, employee_task.t_status, task_report.tr_progress "
                 + "FROM task_report INNER JOIN employee_acc ON employee_acc.acc_id = task_report.acc_id "
                 + "INNER JOIN employee_task ON employee_task.t_id = task_report.t_id";
 
-        String[] Headers = {"Assigned Account ID", "Assigned Task ID", "Due Date", "Progress Percentage", "Status"};
-        String[] Columns = {"acc_id", "t_id", "t_dd", "tr_progress", "t_status"};
+        String[] Headers = {"Assigned Account", "Assigned Task", "Due Date", "Progress Percentage", "Status"};
+        String[] Columns = {"e_fname", "t_name", "t_dd", "tr_progress", "t_status"};
 
         config conf = new config();
         conf.viewRecords(taskRquery, Headers, Columns);

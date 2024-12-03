@@ -58,6 +58,6 @@ public class Tlsystem {
                     System.out.println("Choice Error, There's no number "+cho+" in choices!");
             }  
         } while(exit);
-        System.out.println("Thank you for using the TLS System :)");
+        System.out.println("Thank you for using the Task List System :)");
     }
 }
