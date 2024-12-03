@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Employee {
     
     public void viewTask() {
-        String Query = "SELECT * FROM employee_task";
+        String Query = "SELECT t_name, t_des FROM employee_task";
         String[] Headers = {"Task Name", "Description"};
         String[] Columns = {"t_name", "t_des"};
 

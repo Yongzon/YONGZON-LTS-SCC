@@ -59,7 +59,7 @@ public class Hr {
         conf.viewRecords(Query, Headers, Columns);
 }
     public void viewTask2() {
-        String Query = "SELECT * FROM employee_task";
+        String Query = "SELECT t_id, t_name, t_des FROM employee_task";
         String[] Headers = {"Task ID", "Task Name", "Description"};
         String[] Columns = {"t_id", "t_name", "t_des"};
 
@@ -211,7 +211,7 @@ do{
                         String res = sc.next();
 
                         if (res.equalsIgnoreCase("yes")) {
-                            hr.viewTask(); 
+                            hr.viewTask2(); 
                             break; 
                         } else if (res.equalsIgnoreCase("no")) {
                             break;

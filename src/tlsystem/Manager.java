@@ -14,7 +14,7 @@ public class Manager {
 }
     
     public void viewTask2() {
-        String Query = "SELECT * FROM employee_task WHERE t_status != 'Started'";
+        String Query = "SELECT t_name, t_des FROM employee_task WHERE t_status != 'Started'";
         String[] Headers = {"Task Name", "Description"};
         String[] Columns = {"t_name", "t_des"};
 
